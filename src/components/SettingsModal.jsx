@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Settings, Sun, Moon, LogOut, FileSpreadsheet, Tag, CreditCard, Clock, Eye, EyeOff } from 'lucide-react';
+import { Settings, Sun, Moon, LogOut, FileSpreadsheet, Tag, CreditCard, Clock, Eye, EyeOff, Database } from 'lucide-react';
 import { useExpense } from '../context/ExpenseContext';
 import ExportModal from './ExportModal';
 import CategoryModal from './CategoryModal';
 import CreditCardModal from './CreditCardModal';
 import RecurringModal from './RecurringModal';
+import BackupModal from './BackupModal';
 
 export default function SettingsModal() {
   const { theme, toggleTheme, logout, user, hideAmounts, toggleHideAmounts } = useExpense();
@@ -13,6 +14,7 @@ export default function SettingsModal() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showCreditCardModal, setShowCreditCardModal] = useState(false);
   const [showRecurringModal, setShowRecurringModal] = useState(false);
+  const [showBackupModal, setShowBackupModal] = useState(false);
 
   return (
     <>
@@ -85,6 +87,12 @@ export default function SettingsModal() {
               匯出 Excel 報表 (.xlsx)
             </button>
 
+            {/* Backup & Restore JSON */}
+            <button className="settings-item" onClick={() => { setShowBackupModal(true); setOpen(false); }}>
+              <Database size={18} style={{ color: '#06b6d4' }} />
+              資料備份與還原 (.json)
+            </button>
+
             <div className="settings-divider" />
 
             {/* Logout */}
@@ -101,6 +109,7 @@ export default function SettingsModal() {
       <CategoryModal isOpen={showCategoryModal} onClose={() => setShowCategoryModal(false)} />
       <CreditCardModal isOpen={showCreditCardModal} onClose={() => setShowCreditCardModal(false)} />
       <RecurringModal isOpen={showRecurringModal} onClose={() => setShowRecurringModal(false)} />
+      <BackupModal isOpen={showBackupModal} onClose={() => setShowBackupModal(false)} />
     </>
   );
 }
